@@ -1,5 +1,4 @@
 const { prisma } = require("../lib/prisma");
-const { sentence, article } = require("txtgen");
 
 const getPosts = async (req, res) => {
   const posts = await prisma.post.findMany();
@@ -7,6 +6,7 @@ const getPosts = async (req, res) => {
 };
 
 const getPost = async (req, res) => {
+  console.log(req.user.username)
   const { id } = req.params;
   const post = await prisma.post.findUnique({
     where: {
