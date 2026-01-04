@@ -5,6 +5,7 @@ const signUp = require("./routes/sign-up");
 const login = require("./routes/login");
 const verifyToken = require("./config/verifyToken");
 const authenticateToken = require("./config/authenticateToken");
+const comments = require("./routes/comments");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -15,6 +16,7 @@ app.use(express.json());
 require("./config/passport");
 
 app.use("/posts", verifyToken, authenticateToken, posts);
+app.use("/comments", comments)
 app.use("/sign-up", signUp);
 app.use("/login", login);
 
