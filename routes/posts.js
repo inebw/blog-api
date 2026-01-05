@@ -6,13 +6,15 @@ const {
   deletePost,
   updatePost,
 } = require("../controllers/posts");
+const authenticateToken = require("../config/authenticateToken");
 
 const router = Router();
 
 router.get("/", getPosts);
-router.post("/", addPost);
 router.get("/:id", getPost);
-router.delete("/:id", deletePost);
-router.put("/:id", updatePost);
+router.post("/", authenticateToken, addPost);
+router.delete("/:id", authenticateToken, deletePost);
+router.put("/:id", authenticateToken, updatePost);
+
 
 module.exports = router;

@@ -3,22 +3,29 @@ const express = require("express");
 const posts = require("./routes/posts");
 const signUp = require("./routes/sign-up");
 const login = require("./routes/login");
-const verifyToken = require("./config/verifyToken");
-const authenticateToken = require("./config/authenticateToken");
 const comments = require("./routes/comments");
+const cookieParser = require("cookie-parser");
+const cors = require('cors');
+const logout = require("./routes/logout");
 
 const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser())
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials:true
+}))
 
 require("./config/passport");
 
-app.use("/posts", verifyToken, authenticateToken, posts);
+app.use("/posts", posts);
 app.use("/comments", comments)
 app.use("/sign-up", signUp);
 app.use("/login", login);
+app.use("/logout", logout)
 
 app.listen(port, (err) => {
   if (err) console.error(err);
