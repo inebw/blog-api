@@ -7,6 +7,7 @@ const comments = require("./routes/comments");
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
 const logout = require("./routes/logout");
+const user = require("./routes/user");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -26,6 +27,7 @@ app.use("/comments", comments)
 app.use("/sign-up", signUp);
 app.use("/login", login);
 app.use("/logout", logout)
+app.use("/user", user)
 
 app.listen(port, (err) => {
   if (err) console.error(err);

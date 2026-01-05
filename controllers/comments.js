@@ -3,9 +3,10 @@ const { body, validationResult, matchedData } = require("express-validator");
 
 const getComments = async (req, res) => {
   const post_id = parseInt(req.params.id);
-  const comments = await prisma.post.findUnique({
-    select: { comments: true },
-    where: { id: post_id },
+  const comments = await prisma.comment.findMany({
+    where: {
+      post_id,
+    },
   });
   res.json(comments);
 };
@@ -31,6 +32,7 @@ const addComment = [
         data: {
           post_id,
           content,
+          user_id: req.user ? parseInt(req.user.id) : null,
         },
       });
       res.sendStatus(201);
@@ -70,5 +72,5 @@ module.exports = {
   getComments,
   addComment,
   updateComment,
-  deleteComment
+  deleteComment,
 };

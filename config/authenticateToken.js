@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
   if (!token) return res.sendStatus(403);
   else {
     jwt.verify(token, process.env.SECRET, async (err, authData) => {
-      if (err) res.sendStatus(403);
+      if (err) res.status(403).json({message:"Invalid Credentials"});
       else {
         const { id } = authData;
         const user = await prisma.user.findUnique({

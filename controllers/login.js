@@ -7,7 +7,13 @@ module.exports = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.IS_PROD === "PROD" ? true : false,
-    sameSite: process.env.IS_PROD === "PROD" ? "none" : "strict"
+    sameSite: process.env.IS_PROD === "PROD" ? "none" : "lax",
   });
-  res.sendStatus(200)
+  const user = {
+    id: req.user.id,
+    first_name: req.user.first_name,
+    last_name: req.user.last_name,
+    username: req.user.username,
+  };
+  res.json(user);
 };
