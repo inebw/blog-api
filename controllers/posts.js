@@ -60,7 +60,7 @@ const updatePost = [
         data: { title, content },
         where: { id: parseInt(id) },
       });
-      res.sendStatus(201)
+      res.sendStatus(201);
     }
   },
 ];

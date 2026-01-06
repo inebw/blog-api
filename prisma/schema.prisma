@@ -30,6 +30,7 @@ model Post {
   author User @relation(fields: [author_id], references: [id])
   author_id Int
   comments Comment[]
+  img String?
   created DateTime @default(now())
 }
 

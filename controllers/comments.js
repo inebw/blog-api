@@ -7,6 +7,16 @@ const getComments = async (req, res) => {
     where: {
       post_id,
     },
+    include: {
+      user: {
+        select: {
+          id: true,
+          first_name: true,
+          last_name: true,
+          username: true,
+        },
+      },
+    },
   });
   res.json(comments);
 };
@@ -60,11 +70,16 @@ const updateComment = [
 
 const deleteComment = async (req, res) => {
   const { comment_id } = req.params;
-  await prisma.comment.delete({
-    where: {
-      id: parseInt(comment_id),
-    },
-  });
+  try {
+    await prisma.comment.delete({
+      where: {
+        id: parseInt(comment_id),
+        user_id: parseInt(req.user.id),
+      },
+    });
+  } catch (e) {
+    console.log(e);
+  }
   res.sendStatus(203);
 };
 
