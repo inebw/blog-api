@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:'https://blog-api-client-silk.vercel.app/',
     credentials:true
 }))
 
