@@ -5,7 +5,7 @@ const signUp = require("./routes/sign-up");
 const login = require("./routes/login");
 const comments = require("./routes/comments");
 const cookieParser = require("cookie-parser");
-const cors = require('cors');
+const cors = require("cors");
 const logout = require("./routes/logout");
 const user = require("./routes/user");
 
@@ -14,20 +14,26 @@ const port = process.env.PORT || 4000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser())
-app.use(cors({
-    origin:'https://blog-api-client-silk.vercel.app/',
-    credentials:true
-}))
+app.use(cookieParser());
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://blog-api-client-silk.vercel.app",
+];
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 require("./config/passport");
 
 app.use("/posts", posts);
-app.use("/comments", comments)
+app.use("/comments", comments);
 app.use("/sign-up", signUp);
 app.use("/login", login);
-app.use("/logout", logout)
-app.use("/user", user)
+app.use("/logout", logout);
+app.use("/user", user);
 
 app.listen(port, (err) => {
   if (err) console.error(err);
